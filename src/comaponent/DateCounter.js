@@ -20,6 +20,8 @@ function reducer(state, action) {
   }
 }
 
+// how useReducer work and when we use this concept--- when we have to manage multiple state and state management is complex then we use this useReducer hook and syntax of this use reducer hook is useReducer(reducer,intiStates) this u can learn from this example as well
+
 function DateCounter() {
   const [state, dispatch] = useReducer(reducer, initialState);
   // const [step, dispatch] = useReducer(reducer, 1);
