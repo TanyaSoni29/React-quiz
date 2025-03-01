@@ -11,7 +11,7 @@ import NextButton from "./comaponent/NextButton";
 const initialState = {
   questions: [],
 
-  // loading, error, ready, active, finished
+  // loading, error, ready, active, finished we can divide the status
   status: "loading",
   index: 0,
   answer: null,
