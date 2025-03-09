@@ -7,9 +7,11 @@ import Loader from "./comaponent/Loader";
 import Error from "./comaponent/Error";
 import StartScreen from "./comaponent/StartScreen";
 import Question from "./comaponent/Question";
-import NextButton from "./comaponent/NextButton";
 import Progress from "./comaponent/Progress";
 import FinishScreen from "./comaponent/FinishScreen";
+import Footer from "./comaponent/Footer";
+
+const SEC_PER_QUESTIONS = 30;
 const initialState = {
   questions: [],
 
@@ -19,6 +21,7 @@ const initialState = {
   answer: null,
   points: 0,
   highscore: 0,
+  secondsRemaining: null,
 };
 
 function reducer(state, action) {
@@ -28,7 +31,11 @@ function reducer(state, action) {
     case "dataFailed":
       return { ...state, status: "error" };
     case "start":
-      return { ...state, status: "active" };
+      return {
+        ...state,
+        status: "active",
+        secondsRemaining: state.questions * SEC_PER_QUESTIONS,
+      };
     case "newAnswer":
       const question = state.questions.at(state.index);
       return {
@@ -52,6 +59,12 @@ function reducer(state, action) {
     case "restart":
       return { ...initialState, questions: state.questions, status: "ready" };
     // return { ...state, answer: null, status: "ready", index: 0, points: 0, highscore: 0 }; this could also be used...
+    case "tick":
+      return {
+        ...state,
+        secondsRemaining: state.secondsRemaining - 1,
+        status: state.secondsRemaining === 0 ? "finished" : state.status,
+      };
     default:
       throw new Error("Unknown Action");
   }
@@ -60,7 +73,15 @@ function reducer(state, action) {
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const { questions, status, answer, index, points, highscore } = state;
+  const {
+    questions,
+    status,
+    answer,
+    index,
+    points,
+    highscore,
+    secondsRemaining,
+  } = state;
   const numQuestions = questions.length;
   const totalPoints = questions?.reduce((prev, curr) => prev + curr.points, 0);
 
@@ -104,12 +125,13 @@ function App() {
               dispatch={dispatch}
               answer={answer}
             />
-            <NextButton
+            <Footer
               dispatch={dispatch}
               answer={answer}
               numQuestions={numQuestions}
               index={index}
               status={status}
+              secondsRemaining={secondsRemaining}
             />
           </>
         )}

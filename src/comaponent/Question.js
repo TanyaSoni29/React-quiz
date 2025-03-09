@@ -1,6 +1,5 @@
 export default function Question({ question, dispatch, answer }) {
   const hasAnswered = answer !== null;
-  console.log(question);
   return (
     <div>
       <h4>{question?.question}</h4>
