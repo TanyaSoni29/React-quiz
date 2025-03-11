@@ -1,4 +1,3 @@
-// import DateCounter from "./comaponent/DateCounter";
 import { useEffect } from "react";
 import Header from "./comaponent/Header";
 import { useReducer } from "react";
@@ -15,7 +14,7 @@ const SEC_PER_QUESTIONS = 30;
 const initialState = {
   questions: [],
 
-  // loading, error, ready, active, finished we can divide the status
+  // loading, error, ready, active, finished we can divide the status this will easily tell us about types of sitution exist in our app
   status: "loading",
   index: 0,
   answer: null,
