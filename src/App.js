@@ -64,6 +64,7 @@ function reducer(state, action) {
         secondsRemaining: state.secondsRemaining - 1,
         status: state.secondsRemaining === 0 ? "finished" : state.status,
       };
+      // this tick state is to update the timer in the quiz 
     default:
       throw new Error("Unknown Action");
   }
